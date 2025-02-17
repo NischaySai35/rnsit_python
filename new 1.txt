@@ -1,0 +1,15 @@
+RNSIT PYTHON TRAINING
+
+DAY1- FEB 17
+
+$ git clone reop_URL
+
+$ git pull origin main
+----------------------------------
+Config commands:
+
+$ git config --global user.name "NischaySai35"
+
+$ git config --global user.email "nischaysai35@gmail.com"
+
+$ git clone https://PAT@github.com/neelmyna/rnsit_sam_py
