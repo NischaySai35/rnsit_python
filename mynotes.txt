@@ -13,3 +13,30 @@ $ git config --global user.name "NischaySai35"
 $ git config --global user.email "nischaysai35@gmail.com"
 
 $ git clone https://PAT@github.com/neelmyna/rnsit_sam_py
+
+$ git commit -m "notes of the data science added"
+
+To know where python is installed:
+python -c "import sys; print(sys.executable)"
+
+CERTIFICATIONS:
+
+Java exacm codes
+1Z0-811
+1Z0-829
+1z0-830
+
+oracle java certification
+pythoninstitute.org  (PCAP, PCEP, PCAD)
+
+For JS it is linuxfoundation
+
+CDAC
+nptel
+
+CRUD Operations:
+C create (insert) One record
+R read/retrieve One tuple
+U update One row
+D delete One row
+List all rows

@@ -1,4 +1,3 @@
-
 n=int(input("Enter no. of oranges : "))
 l1=list(map(int,input("Enter size of oranges : ").split()))
 print(l1)
