@@ -1,12 +1,19 @@
 import pymysql
 
+class Person:
+    def __init__(self):
+        self.name = ""
+        self.dob = ""
+        self.gender = ""
+        self.location = ""
+
 class Db_operations:
     def __init__(self):
         pass
 
     def connect_db(self):
         try:
-            connection = pymysql.Connect(host='localhost', port=3306, user='root', password='Root123', database='nithin_db', charset='utf8')
+            connection = pymysql.Connect(host='localhost', port=3306, user='root', password='root', database='nithin_db', charset='utf8')
             print('DB connected')
             return connection
         except:

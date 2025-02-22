@@ -1,61 +1,61 @@
 from flask import Flask, jsonify, request
+from person_dao import Person, Db_operations
 
-from flight_crud_oprs import create_table_flights, create_flight, delete_flight, update_flight, search_flight, list_flights, Flight
+persons = Db_operations()
 
-create_table_flights()
-
+persons.create_table()
 app = Flask(__name__)
 
-@app.route('/flights',methods=['POST'])
-def flights_create():
+@app.route('/persons',methods=['POST'])
+def persons_create():
     body = request.get_json()
-    new_flight = Flight(body['airline'], body['source'], body['destination'], body['duration'], body['fare'])
-    id = create_flight(new_flight)
-    flight = search_flight(id)
-    flight_dict = {'id':flight.id, 'airline':flight.airline, 'source':flight.source, 'destination':flight.destination, 'duration': flight.duration, 'fare': flight.fare}
-    return jsonify(flight_dict)
+    new_person = Person(body['name'], body['gender'], body['dob'], body['location'])
+    print(type(new_person))
+    id = persons.insert_row(new_person)
+    person = persons.search_row(id)
+    person_dict = {'id':person[0], 'name':person[1], 'gender':person[2], 'dob':person[3], 'location': person[4]}
+    return jsonify(person_dict)
 
-@app.route('/flights/<id>',methods=['GET'])
-def flights_read_by_id(id):
-    flight = search_flight(id)
-    print(flight)
-    print(type(flight))
-    if flight == None:
-        return jsonify("flight not found")
-    flight_dict = {'id':flight.id, 'title':flight.airline, 'source':flight.source, 'destination':flight.destination, 'duration': flight.duration, 'fare': flight.fare}
-    return jsonify(flight_dict)
+@app.route('/new_persons/<id>',methods=['GET'])
+def persons_read_by_id(id):
+    person = persons.search_row(id)
+    print(person)
+    print(type(person))
+    if person == None:
+        return jsonify("Person not found")
+    person_dict = {'id':person.id, 'name':person.name, 'gender':person.gender, 'location':person.location, 'dob': person.dob}
+    return jsonify(person_dict)
 
-@app.route('/flights',methods=['GET'])
-def flights_read_all():
-    flights = list_flights()
-    flights_dict = []
-    for flight in flights:
-        flights_dict.append({'id':flight.id, 'airline':flight.airline, 'source':flight.source, 'destination':flight.destination, 'duration': flight.duration, 'fare': flight.fare})
-    return jsonify(flights_dict)
+@app.route('/persons',methods=['GET'])
+def persons_read_all():
+    persons_list = persons.list_all_rows()
+    persons_dict = []
+    for person in persons_list:
+        persons_dict.append({'id':person.id, 'name':person.name, 'gender':person.gender, 'location':person.location, 'dob': person.dob})
+    return jsonify(persons_dict)
 
-@app.route('/flights/<id>',methods=['PUT'])
-def flights_update(id):
+@app.route('/persons/<id>',methods=['PUT'])
+def persons_update(id):
     body = request.get_json()
-    old_flight = search_flight(id)
-    if not old_flight:
-        return jsonify({'message': 'Flight not found'})
-    old_flight.airline = body['airline']
-    old_flight.source = body['source']
-    old_flight.destination = body['destination']
-    old_flight.duration = body['duration']
-    old_flight.fare = body['fare']
+    old_peron_obj = persons.search_row(id)
+    if not old_peron_obj:
+        return jsonify({'message': 'Person not found'})
+    old_peron_obj.name = body['name']
+    old_peron_obj.gender = body['gender']
+    old_peron_obj.location = body['location']
+    old_peron_obj.dob = body['dob']
     id = body['id']
-    update_flight(old_flight, id)
-    flight = search_flight(id)
-    flight_dict = {'id':flight.id, 'title':flight.airline, 'source':flight.source, 'destination':flight.destination, 'duration': flight.duration, 'fare': flight.fare}
-    return jsonify(flight_dict)
+    persons.update_row(old_peron_obj, id)
+    person = persons.search_row(id)
+    person_dict = {'id':person.id, 'name':person.name, 'gender':person.gender, 'location':person.location, 'dob': person.dob}
+    return jsonify(person_dict)
 
-@app.route('/flights/<id>',methods=['DELETE'])
-def flights_delete(id):
-    old_flight = search_flight(id)
-    if not old_flight:
-        return jsonify({'message': 'Flight not found', 'is_error': 1})
-    delete_flight(id)
-    return jsonify({'message': 'Flight is deleted', 'is_error': 0})
+@app.route('/persons/<id>',methods=['DELETE'])
+def persons_delete(id):
+    old_person_obj = persons.search_row(id)
+    if not old_person_obj:
+        return jsonify({'message': 'Person not found', 'is_error': 1})
+    persons.delete_row(id)
+    return jsonify({'message': 'Person is deleted', 'is_error': 0})
 
 app.run(debug=True)
