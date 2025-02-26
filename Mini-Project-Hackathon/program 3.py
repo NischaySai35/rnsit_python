@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-file_path = "D:\\learning\\rnsit_python\\Mini-Project\\Engineering_Branch_Analytics.csv"  
+file_path = "Mini-Project-Hackathon\\Engineering_Branch_Analytics.csv"  
 df = pd.read_csv(file_path, skipinitialspace=True) 
 
 bubble_data = df[["Branch Name SS", "Higher Education Rate", "Research Opportunities", "Students Abroad"]]
@@ -23,7 +23,7 @@ scatter = sns.scatterplot(
     data=bubble_data
 )
 
-plt.title("Higher Education vs Research Opportunities by Branch", fontsize=14)
+plt.title("Higher Education vs Research Opportunities by Branch             Bubble size - Students Abroad", fontsize=14)
 plt.xlabel("Higher Education Rate (%)", fontsize=12)
 plt.ylabel("Research Opportunities (Funding/Publications)", fontsize=12)
 
